@@ -98,7 +98,7 @@ function ProcessUpdates()
         $updatepath = "$($PWD.Path)\WindowsUpdate.ps1"
         if (Test-Path -Path $updatepath)    
         {
-            Remove-Item $updatepath -Force
+            #Remove-Item $updatepath -Force
         }
         if (UpdatesAvailable)
         {
