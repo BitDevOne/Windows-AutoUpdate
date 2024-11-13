@@ -75,11 +75,11 @@ function UpdatesAvailable()
 
     if ($nextversion -ne $null -and $version -ne $nextversion)
     {
-        # An update is most likely available, but make sure
+        # Sprawdzenie czy aktualizacja jest rzeczywiście dostępna
         $updateavailable = $false
         $curr = $version.Split('.')
         $next = $nextversion.Split('.')
-        for($i=0; $i -le ($curr.Count -1); $i++)
+        for($i=0; $i -le ($curr.Count - 1); $i++)
         {
             if ([int]$next[$i] -gt [int]$curr[$i])
             {
@@ -96,22 +96,50 @@ function ProcessUpdates()
     if (Test-Connection 8.8.8.8 -Count 1 -Quiet)
     {
         $updatepath = "$($PWD.Path)\WindowsUpdate.ps1"
-        if (Test-Path -Path $updatepath)    
-        {
-            #Remove-Item $updatepath -Force
-        }
+        
         if (UpdatesAvailable)
         {
-            # Download and execute the update script
-            (New-Object System.Net.WebClient).DownloadFile($githubscript, $updatepath)
-            Write-Host "Pobrano nową wersję skryptu. Aktualizowanie..."
-            Start-Process PowerShell -ArgumentList "-File `"$updatepath`"" -Wait
-            exit
+            # Jeśli istnieje stary skrypt, nazwiemy go inaczej dla celów bezpieczeństwa
+            if (Test-Path -Path $updatepath)
+            {
+                Rename-Item -Path $updatepath -NewName "WindowsUpdate_Old.ps1" -Force
+            }
+            
+            # Pobrać i zapisać nową wersję skryptu
+            try
+            {
+                (New-Object System.Net.WebClient).DownloadFile($githubscript, $updatepath)
+                Write-Host "Pobrano nową wersję skryptu. Aktualizowanie..."
+                
+                # Wykonanie nowego skryptu
+                Start-Process PowerShell -ArgumentList "-File `"$updatepath`"" -Wait
+                
+                # Usunięcie starej wersji po udanej aktualizacji
+                if (Test-Path -Path "$($PWD.Path)\WindowsUpdate_Old.ps1")
+                {
+                    Remove-Item "$($PWD.Path)\WindowsUpdate_Old.ps1" -Force
+                }
+                exit
+            }
+            catch [System.Exception]
+            {
+                Write-Host "Błąd podczas pobierania nowej wersji skryptu: $_"
+
+                # Przywrócenie starego skryptu w przypadku błędu
+                if (Test-Path -Path "$($PWD.Path)\WindowsUpdate_Old.ps1")
+                {
+                    Rename-Item -Path "$($PWD.Path)\WindowsUpdate_Old.ps1" -NewName "WindowsUpdate.ps1" -Force
+                }
+            }
+        }
+        else
+        {
+            Write-Host "Brak aktualizacji."
         }
     }
     else
     {
-        Write-Host "Brak internetu"
+        Write-Host "Brak połączenia z internetem."
     }
 }
 
