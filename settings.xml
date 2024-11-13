@@ -3,6 +3,8 @@
   <CompanyName></CompanyName>
   <HostName></HostName>
   <SMTPserver></SMTPserver>
+  <SMTPport></SMTPport>
   <MailboxFrom></MailboxFrom>
+  <MailboxFromPass></MailboxFromPass>
   <MailboxTo></MailboxTo>
 </settings>

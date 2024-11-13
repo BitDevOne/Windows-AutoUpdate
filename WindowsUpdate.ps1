@@ -130,13 +130,20 @@ function SendEmail {
     # Pobranie danych z pliku XML
     $HostName = $xmlDocument.settings.HostName
     $Companyname = $xmlDocument.settings.CompanyName
-    $SMTPServer = $xmlDocument.settings.SMTPserver
-    $SMTPFrom = $xmlDocument.settings.MailboxFrom
+    $Username = $xmlDocument.settings.MailboxFrom
+    $Password = $xmlDocument.settings.MailboxFromPass
+    $message = new-object Net.Mail.MailMessage;
+    $message.From = $Username;
     $Recipient = $xmlDocument.settings.MailboxTo
-
-    $Subject = "[Windows Update] - [$Companyname] - [$HostName]"
-
-    Send-MailMessage -From $SMTPFrom -To $Recipient -Subject $Subject -Body $Body -SmtpServer $SMTPServer
+    $message.To.Add($Recipient);
+    $message.Subject = "[Windows Update] - [$Companyname] - [$HostName]"
+    $message.Body = $Body
+    $SMTPServer = $xmlDocument.settings.SMTPserver
+    $SMTPport = $xmlDocument.settings.SMTPport
+    $smtp = new-object Net.Mail.SmtpClient($SMTPServer, $SMTPport);
+    $smtp.EnableSSL = $true;
+    $smtp.Credentials = New-Object System.Net.NetworkCredential($Username, $Password);
+    $smtp.send($message);
 }
 
 # Definiowanie funkcji do aktualizacji
@@ -294,7 +301,7 @@ function WindowsUpdate2Week {
             $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n")
     
             # Wysyłanie e-maila z listą aktualizacji
-            SendEmail -Recipient $EmailRecipient -Body $EmailBody
+            SendEmail -Body $EmailBody
         }
     }
 }
@@ -367,7 +374,7 @@ function WindowsUpdateAfterReboot {
             $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n") + "\nWymagane jest ponowne uruchomienie systemu."
     
             # Wysyłanie e-maila z listą aktualizacji
-            SendEmail -Recipient $EmailRecipient -Body $EmailBody
+            SendEmail -Body $EmailBody
 
             Restart-Computer -Force
         }

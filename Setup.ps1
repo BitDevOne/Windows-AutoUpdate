@@ -113,9 +113,10 @@ $xmlData.Save("$savePath\settings.xml")
 # Definiowanie akcji dla zadania
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -DontStopOnIdleEnd
 $principal = New-ScheduledTaskPrincipal -UserID "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount -RunLevel Highest
+$workingDirectory = $savePath
 
 # Zadanie 1: Uruchamianie codziennie o 1 w nocy
-$actionDaily = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdateDayly`""
+$actionDaily = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdateDayly`""; Set-Location `"$workingDirectory`"
 $triggerDaily = New-ScheduledTaskTrigger -Daily -At "01:00AM"
 Register-ScheduledTask -Action $actionDaily -Trigger $triggerDaily -Settings $settings -Principal $principal -TaskName "WindowsUpdateDayly" -Description "Uruchamianie skryptu codziennie o 1 w nocy"
 
@@ -132,11 +133,11 @@ if($Companyname -eq "HOST") {
 }else{
     $triggerBiweekly = New-ScheduledTaskTrigger -Weekly -WeeksInterval 2 -At "02:00" -DaysOfWeek Wednesday
 }
-$actionWindowsUpdate2Week = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdate2Week`""
+$actionWindowsUpdate2Week = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdate2Week`""; Set-Location `"$workingDirectory`"""
 Register-ScheduledTask -Action $actionWindowsUpdate2Week -Trigger $triggerBiweekly -Settings $settings -Principal $principal -TaskName "WindowsUpdate2Week" -Description "Uruchamianie skryptu co 2 tygodnie od podanej daty"
 
 # Zadanie 3: Uruchamianie po starcie komputera
-$actionWindowsUpdateAfterReboot = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdateAfterReboot`""
+$actionWindowsUpdateAfterReboot = New-ScheduledTaskAction -Execute "PowerShell.exe" -Argument "-File `"$savePath\WindowsUpdate.ps1 -WindowsUpdateAfterReboot`""; Set-Location `"$workingDirectory`"""
 $triggerAtStartup = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Action $actionWindowsUpdateAfterReboot -Trigger $triggerAtStartup -Settings $settings -Principal $principal -TaskName "WindowsUpdateAfterReboot" -Description "Uruchamianie skryptu po uruchomieniu komputera"
 
