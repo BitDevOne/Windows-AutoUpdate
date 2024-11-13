@@ -55,7 +55,7 @@ param (
 #AutoUpdate
 $githubver = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/Version"
 $githubscript = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/WindowsUpdate.ps1"
-$version = "1.0"
+$version = "1.2"
 
 function UpdatesAvailable()
 {
@@ -282,10 +282,10 @@ function WindowsUpdate2Week {
             $InstalledUpdates | ForEach-Object { Write-Host $_ }
     
             # Przygotowanie treści e-maila
-            $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n") + "\nWymagane jest ponowne uruchomienie systemu."
+            $EmailBody = "Zainstalowano następujące aktualizacje:`n" + ($InstalledUpdates -join "`n") + "`nWymagane jest ponowne uruchomienie systemu."
     
             # Wysyłanie e-maila z listą aktualizacji
-            SendEmail -Recipient $EmailRecipient -Body $EmailBody
+            SendEmail -Body $EmailBody
 
             Restart-Computer -Force
         }
