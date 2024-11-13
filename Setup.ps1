@@ -121,7 +121,7 @@ Register-ScheduledTask -Action $actionDaily -Trigger $triggerDaily -Settings $se
 
 # Zadanie 2: Uruchamianie co 2 tygodnie od podanej daty przez użytkownika
 # Wczytanie pliku XML
-$xmlFilePath = ".\settings.xml"
+$xmlFilePath = "$savePath\settings.xml"
 $xmlContent = Get-Content -Path $xmlFilePath
 $xmlDocument = [xml]$xmlContent
 
