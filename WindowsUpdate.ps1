@@ -53,8 +53,8 @@ param (
 # Definiowanie funkcji
 
 #AutoUpdate
-$githubver = "https://raw.githubusercontent.com/TheMrThx/Random/main/test.txt?token=GHSAT0AAAAAACAUCJYIVORXQVO3CHEJVCVWZCYVKRA"
-$githubscript = "https://raw.githubusercontent.com/TheMrThx/Random/main/update.ps1?token=GHSAT0AAAAAACAUCJYIVORXQVO3CHEJVCVWZCYVKRA"
+$githubver = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/Version"
+$githubscript = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/WindowsUpdate.ps1"
 $version = "1.0"
 
 function UpdatesAvailable()

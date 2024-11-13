@@ -52,8 +52,8 @@
 #>
 
 # Określenie URL do pobrania plików z GitHuba
-$scriptUrl = "https://raw.githubusercontent.com/user/repository/script.ps1"
-$xmlUrl = "https://raw.githubusercontent.com/user/repository/settings.xml"
+$scriptUrl = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/WindowsUpdate.ps1"
+$xmlUrl = "https://raw.githubusercontent.com/BitDevOne/Windows-AutoUpdate/refs/heads/main/settings.xml"
 
 # Sprawdzenie, czy skrypt działa jako administrator
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)) {
