@@ -27,7 +27,7 @@ Dodatkowo skrypt konfiguruje zadania w harmonogramie zadań, aby automatycznie u
 
 Ten skrypt odpowiada za pobieranie skryptu `WindowsUpdate.ps1` oraz pliku konfiguracyjnego XML z repozytorium GitHub. Użytkownik jest proszony o podanie ścieżki, w której pliki mają zostać zapisane. Skrypt sprawdza, czy użytkownik ma odpowiednie uprawnienia administratora oraz czy folder do zapisania plików istnieje. Jeśli nie istnieje, zostaje utworzony.
 
-Dodatkowo, `DownloadAndSetup.ps1` konfiguruje zadania w harmonogramie zadań do uruchamiania skryptu `WindowsUpdate.ps1` w określonych odstępach czasu.
+Dodatkowo, `Setup.ps1` konfiguruje zadania w harmonogramie zadań do uruchamiania skryptu `WindowsUpdate.ps1` w określonych odstępach czasu.
 
 ## Wymagania
 
@@ -40,10 +40,10 @@ Dodatkowo, `DownloadAndSetup.ps1` konfiguruje zadania w harmonogramie zadań do 
 
 1. **Pobierz repozytorium**: Skopiuj repozytorium z GitHuba na lokalny komputer.
 
-2. **Uruchom `DownloadAndSetup.ps1`**: Skrypt poprosi o podanie ścieżki do zapisania pobranych plików oraz skonfiguruje zadania harmonogramu do automatyzacji procesu aktualizacji.
+2. **Uruchom `Setup.ps1`**: Skrypt poprosi o podanie ścieżki do zapisania pobranych plików oraz skonfiguruje zadania harmonogramu do automatyzacji procesu aktualizacji.
 
    ```powershell
-   .\DownloadAndSetup.ps1
+   .\Setup.ps1
    ```
 
 3. **Uruchom `WindowsUpdate.ps1`**: Możesz ręcznie uruchomić skrypt, podając odpowiedni przełącznik (np. `-WindowsUpdateDayly`, `-WindowsUpdate2Week`, `-WindowsUpdateAfterReboot`). Skrypt można też skonfigurować do automatycznego uruchamiania przez zadania harmonogramu.
