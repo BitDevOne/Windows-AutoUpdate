@@ -418,7 +418,7 @@ function WindowsUpdateAfterReboot {
             $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n")
     
             # Wysyłanie e-maila z listą aktualizacji
-            SendEmail -Recipient $EmailRecipient -Body $EmailBody
+            SendEmail -Body $EmailBody
         }
     }
 }
