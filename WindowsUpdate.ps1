@@ -164,7 +164,7 @@ function SendEmail {
     $message.From = $Username;
     $Recipient = $xmlDocument.settings.MailboxTo
     $message.To.Add($Recipient);
-    $message.Subject = "[Windows Update] - [$Companyname] - [$HostName]"
+    $message.Subject = "[Windows Update] - [$Companyname] - $HostName"
     $message.Body = $Body
     $SMTPServer = $xmlDocument.settings.SMTPserver
     $SMTPport = $xmlDocument.settings.SMTPport
@@ -236,7 +236,7 @@ function WindowsUpdateDayly {
         $InstalledUpdates | ForEach-Object { Write-Host $_ }
 
         # Przygotowanie treści e-maila
-        $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n")
+        $EmailBody = "Zainstalowano następujące aktualizacje:`n" + ($InstalledUpdates -join "`n")
 
         # Wysyłanie e-maila z listą aktualizacji
         SendEmail -Recipient $EmailRecipient -Body $EmailBody
@@ -326,7 +326,7 @@ function WindowsUpdate2Week {
             $InstalledUpdates | ForEach-Object { Write-Host $_ }
     
             # Przygotowanie treści e-maila
-            $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n")
+            $EmailBody = "Zainstalowano następujące aktualizacje:`n" + ($InstalledUpdates -join "`n")
     
             # Wysyłanie e-maila z listą aktualizacji
             SendEmail -Body $EmailBody
@@ -399,7 +399,7 @@ function WindowsUpdateAfterReboot {
             $InstalledUpdates | ForEach-Object { Write-Host $_ }
     
             # Przygotowanie treści e-maila
-            $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n") + "\nWymagane jest ponowne uruchomienie systemu."
+            $EmailBody = "Zainstalowano następujące aktualizacje:`n" + ($InstalledUpdates -join "`n") + "`nWymagane jest ponowne uruchomienie systemu."
     
             # Wysyłanie e-maila z listą aktualizacji
             SendEmail -Body $EmailBody
@@ -415,7 +415,7 @@ function WindowsUpdateAfterReboot {
             $InstalledUpdates | ForEach-Object { Write-Host $_ }
     
             # Przygotowanie treści e-maila
-            $EmailBody = "Zainstalowano następujące aktualizacje:\n" + ($InstalledUpdates -join "`n")
+            $EmailBody = "Zainstalowano następujące aktualizacje:`n" + ($InstalledUpdates -join "`n")
     
             # Wysyłanie e-maila z listą aktualizacji
             SendEmail -Body $EmailBody
