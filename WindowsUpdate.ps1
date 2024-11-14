@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Skrypt do automatyzacji instalacji i zarządzania aktualizacjami systemu Windows.
 
