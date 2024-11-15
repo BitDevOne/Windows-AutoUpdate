@@ -126,8 +126,8 @@ $xmlContent = Get-Content -Path $xmlFilePath
 $xmlDocument = [xml]$xmlContent
 
 # Pobranie danych z pliku XML
-$Companyname = $xmlDocument.settings.CompanyName
-if($Companyname -like "*HOST*") {
+$HostName = $xmlDocument.settings.HostName
+if($HostName -like "*HOST*") {
     $triggerBiweekly = New-ScheduledTaskTrigger -Weekly -WeeksInterval 2 -At "02:00" -DaysOfWeek Thursday
 }else{
     $triggerBiweekly = New-ScheduledTaskTrigger -Weekly -WeeksInterval 2 -At "02:00" -DaysOfWeek Wednesday
